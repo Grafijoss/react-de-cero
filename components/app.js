@@ -11,7 +11,7 @@ const element = createElement(
   "hola mundo desde"
 );
 
-console.log(element);
+// console.log(element);
 
 class App extends Component {
   render() {
@@ -34,6 +34,7 @@ class App extends Component {
           new User({
             name: "Ash",
             avatar: "./images/ash.jpg",
+            age: 10,
           }),
         ],
       }),
