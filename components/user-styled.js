@@ -1,5 +1,5 @@
 import styled from "../lib/styled-components.js";
-import { Component } from "../lib/react/src/React.js";
+import { Component, createElement } from "../lib/react/index.js";
 
 const UserStyled = styled.div`
   background-image: linear-gradient(
@@ -31,14 +31,19 @@ const AvatarStyled = styled.img`
 class User extends Component {
   render() {
     const { name, avatar } = this.props;
-    return `
-      ${UserStyled(`
-        ${AvatarStyled(`
-          src=${avatar}
-        `)}
-        <h2>${name}</h2>
-      `)}
-    `;
+    // recibe propiedades
+    // y string con contenido
+    return UserStyled(
+      {
+        children: [
+          AvatarStyled({
+            src: avatar,
+          }),
+          createElement("h2", null, name),
+        ],
+      },
+      ""
+    );
   }
 }
 
