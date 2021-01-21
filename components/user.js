@@ -1,9 +1,26 @@
 import { Component, createElement } from "../lib/react/index.js";
 
 class User extends Component {
+  displayName = "User";
   state = {
     age: this.props.age,
   };
+
+  componentWillMount() {
+    console.log(`the ${this.displayName} component was rendered`);
+  }
+
+  componentDidMount() {
+    console.log(`the ${this.displayName} omponentt is to be rendered`);
+  }
+
+  componentWillUpdate() {
+    console.log(`the ${this.displayName} omponentt is to be updated`);
+  }
+
+  componentDidUpdate() {
+    console.log(`the ${this.displayName} omponentt was updated`);
+  }
 
   // recibe las propiedades cuando se instancia la clase
   // constructor(props) {
@@ -21,7 +38,6 @@ class User extends Component {
   //   console.table(this.props);
   // }
   handleClick = (event) => {
-    console.table(this.state.age);
     // setstate-lesson
     this.setState({
       age: this.state.age + 1,
