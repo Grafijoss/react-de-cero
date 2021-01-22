@@ -1,7 +1,19 @@
 import { createElement } from "./react/index.js";
 
 const styled = {};
-const elements = ["h1", "p", "div", "img", "article", "footer", "header"];
+const elements = [
+  "h1",
+  "p",
+  "div",
+  "img",
+  "article",
+  "footer",
+  "header",
+  "form",
+  "input",
+  "button",
+  "select",
+];
 
 function buildStyles(strings, dynamicValues, props) {
   // hacemos una copia del array
