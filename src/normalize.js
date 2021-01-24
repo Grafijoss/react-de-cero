@@ -23,7 +23,7 @@ function getAllIds(list, oldList = []) {
 function getMostValuedIds(list, oldList = []) {
   return list.reduce((list, movie) => {
     // si la pelicula tiene mas de 7 votos
-    if (movie.vote_average > 7) {
+    if (movie.vote_average >= 7) {
       // push añade un elemento a la parte final del array
       // vamos a añadir solo el id de la pelicula
       list.push(movie.id);
@@ -35,7 +35,7 @@ function getMostValuedIds(list, oldList = []) {
 
 function getLeastValuedIds(list, oldList = []) {
   return list.reduce((list, movie) => {
-    if (movie.vote_average <= 7) {
+    if (movie.vote_average < 7) {
       list.push(movie.id);
     }
     return list;
