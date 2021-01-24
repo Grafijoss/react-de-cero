@@ -3,7 +3,8 @@ import styled from "../lib/styled-components.js";
 
 import Wrapper from "./wrapper.js";
 import Movie from "./movie.js";
-import movies from "../movies.js";
+// import movies from "../movies.js";
+import store from "../store.js";
 
 const MovieListStyled = styled.section`
   display: grid;
@@ -14,7 +15,12 @@ const MovieListStyled = styled.section`
 `;
 
 class MovieList extends Component {
+  state = {
+    movies: store.getState().movieList,
+  };
+
   render() {
+    const { movies } = this.state;
     return Wrapper({
       children: MovieListStyled({
         children: movies.map((movie) => new Movie(movie)),
