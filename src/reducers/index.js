@@ -6,13 +6,22 @@ import {
   getMostValuedIds,
 } from "../normalize.js";
 
-function filterByTitle({ title, list: movies }) {
-  return movies.filter((movie) => {
-    return movie.title.toLowerCase().includes(title.toLowerCase());
+function filterByTitle(title, movies) {
+  const list = [];
+  // movies es un mapa no es un array
+  // no funcionan los metodos de array
+  // pero un map se puede iterar
+
+  movies.forEach((movie) => {
+    if (movie.title.toLowerCase().includes(title.toLowerCase())) {
+      list.push(movie.id);
+    }
   });
+
+  return list;
 }
 
-function findById(id, allIds) {
+function findById({ query: id, allIds }) {
   const parseId = parseInt(id, 10);
   // si se incluye devolvemos el id
   if (allIds.includes(parseId)) {
@@ -22,11 +31,11 @@ function findById(id, allIds) {
   return allIds;
 }
 
-function searchMovie({ query, allIds }) {
+function searchMovie({ query, list, allIds }) {
   if (isNaN(query)) {
-    // return filterByTitle(query);
+    return filterByTitle(query, list);
   }
-  return findById(query, allIds);
+  return findById({ query, allIds });
   // return findById(query)
 }
 

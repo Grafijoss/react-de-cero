@@ -29,14 +29,19 @@ class MovieList extends Component {
     });
   };
 
-  handdleIntersection = (entries) => {
+  handleIntersection = (entries) => {
+    const state = store.getState();
+    const moviesFiltered = state.list[state.filter].length > 0;
     // console.log(entries);
-    if (entries[0].isIntersecting) {
+    if (entries[0].isIntersecting && moviesFiltered) {
       console.log("traer nueva pagina");
+      console.log(state.list[state.filter].length);
       this.getPage(this.state.page);
       this.setState({
         page: this.state.page + 1,
       });
+    } else {
+      console.log("no hay cincidencias");
     }
   };
 
@@ -52,7 +57,7 @@ class MovieList extends Component {
 
       // la clase IntersectionObserver
       // se le pasa un callback y un objeto de configuracion
-      const observer = new IntersectionObserver(this.handdleIntersection);
+      const observer = new IntersectionObserver(this.handleIntersection);
       observer.observe(window.intersector);
     });
   }
@@ -62,10 +67,16 @@ class MovieList extends Component {
     const movieListId = state.list[state.filter];
     const movieList = state.movieList;
 
+    if (state.list[state.filter].length > 0) {
+      return Wrapper({
+        children: MovieListStyled({
+          children: movieListId.map((id) => new Movie(movieList.get(id))),
+        }),
+      });
+    }
+
     return Wrapper({
-      children: MovieListStyled({
-        children: movieListId.map((id) => new Movie(movieList.get(id))),
-      }),
+      children: MovieListStyled(null, "no hay coincidencias"),
     });
   }
 }
