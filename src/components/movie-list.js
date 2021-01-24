@@ -23,21 +23,37 @@ class MovieList extends Component {
 
   getPage = async (page) => {
     const { results, ...rest } = await api.moviePage(page);
-    console.log(rest);
-    console.log(results);
     store.dispatch({
       type: ADD_MOVIES,
       payload: results,
     });
   };
 
+  handdleIntersection = (entries) => {
+    // console.log(entries);
+    if (entries[0].isIntersecting) {
+      console.log("traer nueva pagina");
+      this.getPage(this.state.page);
+      this.setState({
+        page: this.state.page + 1,
+      });
+    }
+  };
+
   componentDidMount() {
     this.getPage(this.state.page);
     // recibe una funcion como callback
     store.subscribe(() => {
-      console.log("me he actualizado");
+      // console.log("me he actualizado");
       // vamos a forzar el rerenderizado de la aplicacion
+      // el callback se ejecuta cuando las condiciones del interceptor
+      // entran en evaluacion
       this.setState();
+
+      // la clase IntersectionObserver
+      // se le pasa un callback y un objeto de configuracion
+      const observer = new IntersectionObserver(this.handdleIntersection);
+      observer.observe(window.intersector);
     });
   }
 
@@ -45,10 +61,6 @@ class MovieList extends Component {
     const state = store.getState();
     const movieListId = state.list[state.filter];
     const movieList = state.movieList;
-
-    console.log(state);
-
-    console.log(state);
 
     return Wrapper({
       children: MovieListStyled({
